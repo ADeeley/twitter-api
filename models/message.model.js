@@ -1,14 +1,15 @@
 const mongoose = require('mongoose')
+const UserModel = require('./user.model')
 
-const userSchema = new mongoose.Schema({
-	firstName: {
+const messageSchema = new mongoose.Schema({
+	text: {
 		type: String,
 		required: true
 	},
-	lastName: {
-		type: String,
-		required: true
-	},
+	author: {
+		firstName: String,
+		lastName: String
+	}
 })
 
-module.exports = mongoose.model('user', userSchema)
+module.exports = mongoose.model('message', messageSchema)

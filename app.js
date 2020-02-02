@@ -3,12 +3,14 @@ const morgan = require('morgan')
 const connect = require('./connect')
 const { json, urlencoded } = require('body-parser')
 const app = express()
-const userRouter = require('./routes/users')
+const userRouter = require('./routes/users.router')
+const messageRouter = require('./routes/message.router')
 
 app.use(morgan('dev'))
 app.use(urlencoded({ extended: true }))
 app.use(json())
 app.use('/', userRouter);
+app.use('/', messageRouter);
 
 app.get('/', (req, res) => {
 	res.send('OK')

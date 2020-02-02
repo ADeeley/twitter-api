@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../models/user.model')
+const UserModel = require('../models/user.model')
 
 router.route('/user')
 	.get(async (req, res) => {
 		const { firstName } = req.body;
-		const user = await User.find({
+		const user = await UserModel.find({
 			firstName
 		}).lean().exec()
 
@@ -13,7 +13,7 @@ router.route('/user')
 	})
 	.post(async (req, res) => {
 		const { firstName, lastName } = req.body;
-		const user = await User.create({
+		const user = await UserModel.create({
 			firstName,
 			lastName
 		})
