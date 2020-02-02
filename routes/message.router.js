@@ -1,19 +1,22 @@
-var express = require('express');
-var router = express.Router();
-const MessageModel = require('../models/message.model')
-const UserModel = require('../models/user.model')
+const express = require('express');
+const router = express.Router();
+const HttpStatus = require('http-status-codes')
+const MessageModel = require('../models/message.model');
 
-router.route('/message')
+router.route('/messages')
 	.get(async (req, res) => {
 		const { firstName, lastName } = req.body;
-		const user = await MessageModel.find({
-			author: {
-				firstName,
-				lastName
+		let query = {};
+		if (firstName && lastName) {
+			query = {
+				author: {
+					firstName,
+					lastName
+				}
 			}
-		}).lean().exec()
-
-		res.status(200).json(user)
+		}
+		const user = await MessageModel.find(query).lean().exec();
+		res.status(HttpStatus.OK).json(user);
 	})
 	.post(async (req, res) => {
 		const { firstName, lastName, text } = req.body;
@@ -25,7 +28,7 @@ router.route('/message')
 			}
 		})
 
-		res.status(201).json(user.toJSON())
+		res.status(HttpStatus.CREATED).json(user.toJSON());
 	})
 
 module.exports = router;

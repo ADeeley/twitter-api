@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const HttpStatus = require('http-status-codes')
 const UserModel = require('../models/user.model')
 
 router.route('/user')
@@ -9,7 +10,7 @@ router.route('/user')
 			firstName
 		}).lean().exec()
 
-		res.status(200).json(user)
+		res.status(HttpStatus.OK).json(user)
 	})
 	.post(async (req, res) => {
 		const { firstName, lastName } = req.body;
@@ -18,7 +19,7 @@ router.route('/user')
 			lastName
 		})
 
-		res.status(201).json(user.toJSON())
+		res.status(HttpStatus.CREATED).json(user.toJSON())
 	})
 
 
